@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Happy 18th, Choozi 🐥</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff;background:radial-gradient(circle at 20% 10%,#ffb6d9 0,#7b3f75 28%,#1b1025 70%,#09060d 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1.5px);background-size:35px 35px;opacity:.25;pointer-events:none}
+.wrap{width:min(920px,92%);margin:auto;padding:42px 0 70px;text-align:center;position:relative}
+h1{font-size:clamp(38px,9vw,76px);margin:12px 0 8px;line-height:1.02}.sub{font-size:18px;opacity:.9}.heart{font-size:52px;animation:pulse 1.8s infinite}@keyframes pulse{50%{transform:scale(1.12)}}
+.card{margin:26px auto;padding:24px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.09);backdrop-filter:blur(14px);border-radius:24px;box-shadow:0 20px 60px #0004}
+.count{font-size:24px;font-weight:700}.small{font-size:13px;opacity:.7}
+.buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:22px 0}.btn{border:0;border-radius:999px;padding:13px 20px;font-weight:700;cursor:pointer;color:#32152d;background:#fff;box-shadow:0 8px 25px #0003}.btn.alt{background:#ffd1e8}.btn:active{transform:scale(.97)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin-top:20px}.tile{min-height:100px;border:1px solid #ffffff2b;border-radius:18px;background:#ffffff12;color:#fff;cursor:pointer;padding:16px;font-weight:700;transition:.2s}.tile:hover{transform:translateY(-3px);background:#ffffff1f}.num{display:block;font-size:26px;margin-bottom:7px}.modal{position:fixed;inset:0;background:#09050dcc;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.show{display:flex}.box{width:min(560px,100%);background:linear-gradient(145deg,#4e244f,#1d1128);border:1px solid #ffffff2b;border-radius:26px;padding:30px;box-shadow:0 30px 90px #0009}.box h2{margin-top:0}.message{font-size:21px;line-height:1.6}.close{margin-top:22px}.footer{opacity:.7;font-size:13px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="heart">🐥💗</div>
+  <div class="sub">For my favorite person</div>
+  <h1>Happy 18th,<br>baby girl ❤️</h1>
+  <div class="sub">Happy birthday, Choozi 🐥</div>
+
+  <div class="card">
+    <div class="small">YOUR SPECIAL DAY</div>
+    <div class="count" id="countdown">Loading...</div>
+    <div class="buttons">
+      <button class="btn" id="songBtn">🎵 Play birthday song</button>
+      <button class="btn alt" id="surpriseBtn">✨ Surprise me</button>
+    </div>
+    <div class="small">Tap any little envelope below.</div>
+  </div>
+
+  <h2>18 little messages for 18 💌</h2>
+  <div class="grid" id="grid"></div>
+  <div class="footer">Made with way too much love for Choozi 🐥❤️</div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h2 id="modalTitle">For you 💗</h2>
+    <div class="message" id="modalMessage"></div>
+    <button class="btn close" id="closeBtn">Close ❤️</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+"Happy 18th, Choozi 🐥. I hope today reminds you how deeply loved you are.",
+"You have this way of making ordinary days feel a little more special.",
+"I hope this year gives you memories you'll randomly smile about years from now.",
+"No matter how grown up you get, you'll always be my baby girl.",
+"Thank you for being someone I can laugh with, annoy, miss, and love all at once.",
+"I hope every dream you quietly keep in your heart finds its way to you.",
+"You deserve soft days, genuine smiles, peaceful nights, and people who choose you.",
+"If I could gift you one thing besides this little website, it'd be a lifetime of happy moments.",
+"You're one of those people I don't want to become just a memory.",
+"18 looks really good on you, by the way. Just saying. 😭❤️",
+"I hope you never forget how beautiful you are, especially on the days you don't feel it.",
+"Here's to another year of inside jokes, random conversations, and memories together.",
+"Sometimes I still can't believe I got lucky enough to call you mine.",
+"I'll always be rooting for the little things that make you genuinely happy.",
+"Whatever this next chapter brings, I hope it treats your heart kindly.",
+"Keep being the weird, cute, lovable Choozi that I fell for. 🐥",
+"Today is yours. Smile a lot, eat something good, and let yourself be spoiled.",
+"And finally... happy 18th, my Choozi. I love you more than this tiny website could ever explain. ❤️"
+];
+
+const grid=document.getElementById("grid");
+const modal=document.getElementById("modal"), title=document.getElementById("modalTitle"), msg=document.getElementById("modalMessage");
+messages.forEach((m,i)=>{
+  const b=document.createElement("button"); b.className="tile";
+  b.innerHTML=`<span class="num">${i+1} 💌</span>Open me`;
+  b.onclick=()=>openMessage(i); grid.appendChild(b);
+});
+function openMessage(i){title.textContent=`Message ${i+1} for Choozi 🐥`;msg.textContent=messages[i];modal.classList.add("show")}
+document.getElementById("closeBtn").onclick=()=>modal.classList.remove("show");
+modal.onclick=e=>{if(e.target===modal)modal.classList.remove("show")};
+document.getElementById("surpriseBtn").onclick=()=>openMessage(Math.floor(Math.random()*messages.length));
+
+/* Countdown: birthday is September 26 each year. */
+function tick(){
+ const now=new Date(), y=now.getFullYear();
+ let target=new Date(y,8,26,0,0,0);
+ if(now>=target) target=new Date(y+1,8,26,0,0,0);
+ const d=target-now, days=Math.floor(d/86400000), hrs=Math.floor(d/3600000)%24, mins=Math.floor(d/60000)%60, secs=Math.floor(d/1000)%60;
+ document.getElementById("countdown").textContent=`${days}d ${hrs}h ${mins}m ${secs}s`;
+}
+tick();setInterval(tick,1000);
+
+/* iPhone/Safari-safe birthday tune: starts only after a tap, so no autoplay restriction. */
+let audioCtx, playing=false, timers=[];
+const notes=[261.63,261.63,293.66,261.63,349.23,329.63,261.63,261.63,293.66,261.63,392,349.23];
+function playTune(){
+ if(playing)return;
+ playing=true;
+ audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+ let t=audioCtx.currentTime+.05;
+ notes.forEach((freq,i)=>{
+   const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+   osc.type="sine";osc.frequency.value=freq;
+   gain.gain.setValueAtTime(.0001,t);
+   gain.gain.exponentialRampToValueAtTime(.18,t+.03);
+   gain.gain.exponentialRampToValueAtTime(.0001,t+.42);
+   osc.connect(gain).connect(audioCtx.destination);osc.start(t);osc.stop(t+.45);t+=.48;
+ });
+ const total=(notes.length*.48+0.2)*1000;
+ timers.push(setTimeout(()=>{playing=false;document.getElementById("songBtn").textContent="🎵 Play birthday song"},total));
+ document.getElementById("songBtn").textContent="🎵 Playing...";
+}
+document.getElementById("songBtn").onclick=playTune;
+</script>
+</body>
+</html>
